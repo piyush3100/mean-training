@@ -1,0 +1,54 @@
+Q1. Display all documents in the collection:
+Ans: db.restaurants.find();
+
+Q2. Display specific fields (restaurant_id, name, borough, cuisine):
+Ans:	db.restaurants.find({}, {
+			"restaurant_id": 1,
+			"name": 1,
+			"borough": 1,
+			"cuisine": 1
+		});
+
+Q3. Display restaurants in the borough "Bronx":
+Ans: db.restaurants.find({"borough": "Bronx"});
+
+Q4. Find restaurants with a score greater than 90:
+Ans:	db.restaurants.find({
+			grades: { $elemMatch: { "score": { $gt: 90 } } }
+		});
+
+Q5. Find restaurants that do not serve 'American' cuisine and have a grade 'A':
+Ans:	 db.restaurants.find({
+			"cuisine": { $ne: "American " },
+			"grades.grade": "A"
+		});
+
+Q6. Count the number of restaurants in the borough "Brooklyn" and cuisine "Hamburgers":
+Ans:	db.restaurants.countDocuments({
+		"borough": "Brooklyn",
+		"cuisine": "Hamburgers"
+		});
+
+
+Q7. Find names of restaurants with zipcode 11225 that have at least one grade "C":
+Ans:	db.restaurants.find({
+			"address.zipcode": "11225",
+			"grades.grade": "C"
+		}, {
+			"name": 1
+		});
+
+
+Q8. Create an index on the zipcode field:
+Ans: db.restaurants.createIndex({ "address.zipcode": 1 });
+
+
+Q9. Find restaurants with a grade C and a score greater than 50:
+Ans:	db.restaurants.find({
+			"grades": { $elemMatch: { "grade": "C", "score": { $gt: 50 } } }
+		});
+
+Q10. Find restaurants that have only A grades:
+Ans:	db.restaurants.find({
+			"grades": { $not: { $elemMatch: { "grade": { $ne: "A" } } } }
+		});
